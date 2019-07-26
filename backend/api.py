@@ -4,10 +4,13 @@ from typing import List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from google.cloud import storage
 import assets
 
 app = FastAPI()
+
+client = storage.Client()
+bucket = client.get_bucket("rens-steven-slide-gen.appspot.com")
 
 # CONSTANTS
 URL = "https://localhost:3000/"
@@ -19,6 +22,7 @@ class Slide(BaseModel):
 
 
 class Deck(BaseModel):
+    name: str
     slides: List[Slide]
 
 
@@ -34,20 +38,10 @@ def make_deck(deck: Deck):
         output += assets.slide_html(slide.title, slide.img_url)
     output += assets.END_HTML
 
-    n_html_files = len([f for f in os.listdir("./minimal_reveal/") if ".html" in f])
-    fname = f"index{n_html_files+1}.html"
-    with open(f"./minimal_reveal/{fname}", "w") as f:
-        f.write(output)
+    blob = bucket.blob(f"minimal_reveal/{deck.name}.html")
+    blob.upload_from_string(output, content_type="text/html")
+    return {
+        "destination": f"https://storage.googleapis.com/rens-steven-slide-gen.appspot.com/minimal_reveal/{deck.name}.html"
+    }
 
-    return {"url": f"{URL}/minimal_reveal/{fname}"}
-
-
-def upload_blob(bucket_name: str, data: str, destination_blob_name: str):
-    """Uploads data to the bucket."""
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(destination_blob_name)
-    blob.upload_from_string(
-        data, content_type="text/plain", client=None, predefined_acl=None
-    )
 

@@ -32,3 +32,15 @@ Install spaCy language models as follows:
 ```
 python -m spacy download en_core_web_sm
 ```
+
+# Deck Generator 
+
+Install reveal-md
+
+```
+npm install -g reveal-md
+```
+
+Run live: reveal-md ./slides/deck.md
+Export to static html: reveal-md ./slides/deck.md --static ./output/_static
+Export to pdf: reveal-md ./slides/deck.md --print ./output/deck.pdf

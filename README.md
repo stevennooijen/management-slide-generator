@@ -2,6 +2,8 @@
 
 Attempt to create stylish management slides from Python
 
+[Sample deck](https://storage.googleapis.com/rens-steven-slide-gen.appspot.com/minimal_reveal/random_slogans.html)
+
 ## Authors
 
 * Rens Dimmendaal

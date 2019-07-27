@@ -33,14 +33,19 @@ Install spaCy language models as follows:
 python -m spacy download en_core_web_sm
 ```
 
-# Deck Generator 
+# Run api
 
-Install reveal-md
+A deployed version of the api can be found at
+
+[rens-steven-slide-gen.appspot.com/docs](https://rens-steven-slide-gen.appspot.com/docs)
+
+To run locally:
+
+Install the requirements in the backend folder
+Add your Unsplash account and secret key to a .env file
 
 ```
-npm install -g reveal-md
+cd ./backend/
+uvicorn api:app --reload
 ```
-
-Run live: reveal-md ./slides/deck.md
-Export to static html: reveal-md ./slides/deck.md --static ./output/_static
-Export to pdf: reveal-md ./slides/deck.md --print ./output/deck.pdf
+Read the api docs for instructions on how to generate decks. 

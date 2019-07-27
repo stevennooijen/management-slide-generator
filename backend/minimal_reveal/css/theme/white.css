@@ -45,8 +45,10 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #222;
+  color: rgb(255, 234, 0);
+	text-shadow: -10px 10px 0 #000;
   font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-size: 2.5em;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
@@ -54,8 +56,19 @@ body {
   text-shadow: none;
   word-wrap: break-word; }
 
+  #slide-title{
+    text-align: center;
+    vertical-align: top;
+    color: white;
+    font-size: 2em;
+    text-shadow: -2px 2px 2px #000,
+            2px 2px 2px #000,
+            2px -2px 0 #000,
+            -2px -2px 0 #000;
+  }
 .reveal h1 {
-  font-size: 2.5em; }
+  font-size: 2.5em;
+ }
 
 .reveal h2 {
   font-size: 1.6em; }

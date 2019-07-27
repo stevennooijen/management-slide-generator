@@ -2,3 +2,6 @@ fastapi
 uvicorn
 gunicorn
 google-cloud-storage
+google-resumable-media[requests]
+python-dotenv==0.10.3
+python-unsplash==1.0.1

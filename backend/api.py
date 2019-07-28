@@ -4,6 +4,7 @@ import requests
 from typing import List
 
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from google.cloud import storage
 from dotenv import load_dotenv
@@ -20,9 +21,19 @@ redirect_uri = "https://placegoat.com/1440/900"
 auth = Auth(client_id, client_secret, redirect_uri)
 api = Api(auth)
 
-# fast api
+# FASTAPI SETUP ------------------------------------------------------------------------
 app = FastAPI()
 
+# The "*" is needed for vue to accept requests when working locally
+origins = ["http:localhost:3000", "http://localhost:8080", "*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # gcloud bucket
 client = storage.Client()
 bucket = client.get_bucket("rens-steven-slide-gen.appspot.com")
@@ -32,9 +43,11 @@ class Slide(BaseModel):
     title: str
     img_url: str
 
+
 class Deck(BaseModel):
     name: str
     slides: List[Slide]
+
 
 class RandomDeck(BaseModel):
     name: str
@@ -82,6 +95,7 @@ def random_deck(random_deck: RandomDeck):
     return make_deck(deck)
 
 
+@app.get("/random_slogan")
 def generate_sentence():
     verb = random.choice(assets.words["verbs"])
     adjective = random.choice(assets.words["adjectives"])
